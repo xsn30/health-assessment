@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+enum Gender {
+  FEMALE
+  MALE
+  OTHER
+}
+
+enum Goal {
+  LOSE_WEIGHT
+  MAINTAIN_WEIGHT
+  GAIN_WEIGHT
+}
+
+enum ActivityLevel {
+  SEDENTARY
+  LIGHT
+  MODERATE
+  ACTIVE
+  VERY_ACTIVE
+}
+
+enum AssessmentStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum SubscriptionStatus {
+  INACTIVE
+  ACTIVE
+}
+
+model User {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  assessments  Assessment[]
+  subscription Subscription?
+}
+
+model Assessment {
+  id                String            @id @default(cuid())
+  userId            String
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  gender            Gender?
+  goal              Goal?
+  age               Int?
+  heightCm          Float?
+  weightKg          Float?
+  targetWeightKg    Float?
+  activityLevel     ActivityLevel?
+
+  currentStep       Int               @default(0)
+  version           Int               @default(0)
+  status            AssessmentStatus  @default(IN_PROGRESS)
+
+  bmi               Float?
+  recommendedCalories Int?
+  targetDate        DateTime?
+  predictionData    Json?
+
+  completedAt       DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([userId])
+}
+
+model Subscription {
+  id          String             @id @default(cuid())
+  userId      String             @unique
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status      SubscriptionStatus @default(INACTIVE)
+  startedAt   DateTime?
+  expiresAt   DateTime?
+
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
