@@ -130,13 +130,23 @@ function ResultContent() {
     return (
         <main className="min-h-screen bg-[#f7f8f4] px-6 py-12">
             <div className="mx-auto max-w-2xl">
-                <button
-                    type="button"
-                    onClick={() => router.push("/quiz?edit=true")}
-                    className="mb-6 text-sm font-medium text-gray-500 transition hover:text-gray-900"
-                >
-                    ← Back to assessment
-                </button>
+                <div className="mb-6 flex items-center justify-between">
+                    <button
+                        type="button"
+                        onClick={() => router.push("/quiz?edit=true")}
+                        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+                    >
+                        ← Back to assessment
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => router.push("/")}
+                        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+                    >
+                        Home
+                    </button>
+                </div>
 
                 <div className="mb-10 text-center">
                     <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500">
@@ -270,12 +280,12 @@ function ResultContent() {
                             <p className="mt-2 text-3xl font-semibold text-gray-900">
                                 {data.result.targetDate
                                     ? new Date(
-                                          data.result.targetDate
-                                      ).toLocaleDateString("en-US", {
-                                          year: "numeric",
-                                          month: "long",
-                                          day: "numeric",
-                                      })
+                                        data.result.targetDate
+                                    ).toLocaleDateString("en-US", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                    })
                                     : "—"}
                             </p>
                         </div>

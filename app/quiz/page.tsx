@@ -252,7 +252,15 @@ export default function QuizPage() {
                         />
                     </div>
                 </div>
-                {step > 1 && (
+                {step === 1 ? (
+                    <button
+                        type="button"
+                        onClick={() => router.push("/")}
+                        className="mb-6 text-sm font-medium text-gray-500 transition hover:text-gray-900"
+                    >
+                        ← Home
+                    </button>
+                ) : (
                     <button
                         type="button"
                         onClick={() => {
